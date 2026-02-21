@@ -47,5 +47,3 @@ const Countdown = ({ endDate, ...props }) => {
 };
 
 export default Countdown;
-CDJS
-echo "✅ Countdown JSX atualizado"

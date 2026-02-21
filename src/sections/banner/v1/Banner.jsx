@@ -143,5 +143,3 @@ const Banner = () => {
 };
 
 export default Banner;
-BANNERJS
-echo "✅ Banner JSX criado"
