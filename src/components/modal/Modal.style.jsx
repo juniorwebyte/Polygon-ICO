@@ -1,247 +1,212 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-import MeshGradModal from "../../assets/images/modal/overlay1.png";
-import MeshGradModal2 from "../../assets/images/modal/overlay2.png";
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to   { opacity: 1; }
+`;
+
+const slideUp = keyframes`
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+`;
+
+const glowBorder = keyframes`
+  0%, 100% { border-color: #00F5C420; }
+  50%       { border-color: #00F5C450; }
+`;
 
 const ModalWrapper = styled.div`
-  display: block;
-  background: ${({ theme }) => theme.colors.bgModalOverlay};
-  backdrop-filter: blur(5px);
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8,11,20,0.85);
+  backdrop-filter: blur(12px);
+  animation: ${fadeIn} 0.3s ease;
 
   .gittu-modal-dialog {
-    justify-content: center;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
   }
 
   .gittu-modal-content {
-    width: 530px;
-    max-width: 100%;
-    background: ${({ theme }) => theme.colors.bgModal};
-    border: 0;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #0F1525 0%, #0B1020 100%);
+    border: 1px solid #00F5C420;
+    border-radius: 24px;
     overflow: hidden;
-    padding: 40px;
     position: relative;
-    z-index: 0;
-    animation: 0.3s modalContentAnimation;
+    animation: ${slideUp} 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: ${glowBorder} 3s ease-in-out 0.35s infinite;
 
+    /* Top accent line */
     &::before {
-      position: absolute;
       content: "";
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      background-image: url(${MeshGradModal});
-      background-repeat: no-repeat;
-      background-position: top center;
-      z-index: -1;
-    }
-  }
-
-  ${({ variant }) =>
-    variant === "v2" &&
-    css`
-      .gittu-modal-content {
-        &::before {
-          left: -76px;
-          background-image: url(${MeshGradModal2});
-        }
-      }
-    `}
-
-  @keyframes modalContentAnimation {
-    from {
-      transform: translateY(-20px);
-    }
-    to {
-      transform: translateY(0%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00F5C4, #4A9EFF, #7B5EA7);
     }
   }
 
   .gittu-modal-header {
-    margin-bottom: 25px;
+    padding: 24px 28px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+    border-bottom: 1px solid #ffffff08;
+
+    h4 {
+      font-family: ${({ theme }) => theme.fonts.primary};
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #00F5C4, #4A9EFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     button {
-      border: 0;
-      background: transparent;
-      font-size: 20px;
-      color: ${({ theme }) => theme.colors.white};
+      background: #ffffff08;
+      border: 1px solid #ffffff10;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: ${({ theme }) => theme.colors.white}70;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #00F5C415;
+        border-color: #00F5C440;
+        color: #00F5C4;
+        transform: rotate(90deg);
+      }
     }
   }
 
-  .token-info-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .gittu-modal-body {
+    padding: 24px 28px 28px;
 
-    li {
+    .presale-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
       flex-wrap: wrap;
-      padding-bottom: 11px;
-      border-bottom: 1px dashed ${({ theme }) => theme.colors.white}1a;
+      gap: 8px;
+
+      h5 {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: ${({ theme }) => theme.colors.white}50;
+        line-height: 1;
+      }
     }
 
-    li p {
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 30px;
-      color: ${({ theme }) => theme.colors.white};
-    }
-  }
+    .presale-item {
+      h6 {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: ${({ theme }) => theme.colors.white}50;
+        margin-bottom: 8px;
+        font-family: ${({ theme }) => theme.fonts.primary};
+      }
 
-  h6 {
-    margin-bottom: 10px;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 30px;
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.white};
-  }
+      .input-group {
+        background: #ffffff06;
+        border: 1px solid #ffffff10;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        padding: 4px 4px 4px 16px;
+        transition: all 0.3s ease;
 
-  input {
-    width: 100%;
-    padding: 18px 16px 17px;
-    background: ${({ theme }) => theme.colors.white}0d;
-    border: 2px solid ${({ theme }) => theme.colors.white}1a;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 18px;
-    color: ${({ theme }) => theme.colors.white};
-    transition: 0.3s;
-    -moz-appearance: textfield; /* Firefox */
+        &:focus-within {
+          border-color: #00F5C440;
+          background: #00F5C408;
+          box-shadow: 0 0 20px #00F5C410;
+        }
 
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+        input {
+          flex: 1;
+          background: transparent;
+          border: none;
+          outline: none;
+          font-family: ${({ theme }) => theme.fonts.secondary};
+          font-size: 16px;
+          font-weight: 600;
+          color: ${({ theme }) => theme.colors.white};
+          padding: 8px 0;
 
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .presale-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .input-group {
-    width: 100%;
-    display: flex;
-
-    input {
-      width: 60%;
+          &::placeholder {
+            color: ${({ theme }) => theme.colors.white}30;
+          }
+        }
+      }
     }
 
-    &-dropdown {
-      width: 40%;
-    }
-
-    button {
-      border-radius: 0 10px 10px 0;
-    }
-  }
-
-  .btn-approve {
-    min-width: unset;
-  }
-
-  .presale-item-btn-groups {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .presale-item-msg {
-    text-align: center;
-    .text-msg {
-      margin-bottom: 20px;
-      color: ${({ theme }) => theme.colors.white};
-    }
-
-    a {
-      text-decoration: underline !important;
-    }
-
-    &__content {
-      margin-bottom: 20px;
-      border-radius: 10px;
-      padding: 10px 14px;
-      background-color: rgba(255, 63, 63, 0.15);
-      border: 1px solid rgba(255, 63, 63, 0.15);
-      backdrop-filter: blur(5px);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .presale-price-info {
+      background: #00F5C408;
+      border: 1px solid #00F5C415;
+      border-radius: 12px;
+      padding: 14px 16px;
 
       p {
-        font-size: 16px;
+        font-family: ${({ theme }) => theme.fonts.primary};
+        font-size: 13px;
         font-weight: 500;
-        line-height: 1;
-        color: #ff3f3f;
+        color: ${({ theme }) => theme.colors.white}70;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          color: #00F5C4;
+          font-weight: 600;
+        }
       }
     }
+
+    .status-icon {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
   }
+
+  /* Variant v2 */
+  ${({ variant }) =>
+    variant === "v2" &&
+    css`
+      .gittu-modal-content {
+        background: linear-gradient(135deg, #12101a 0%, #0F0D18 100%);
+        border-color: #7B5EA730;
+
+        &::before {
+          background: linear-gradient(90deg, #7B5EA7, #4A9EFF, #00F5C4);
+        }
+      }
+    `}
 
   @media screen and (max-width: 575px) {
-    .gittu-modal-content {
-      width: calc(100% - 40px);
-      max-width: 100%;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .gittu-modal-content {
-      padding: 20px;
-    }
-
-    .gittu-modal-header {
-      margin-bottom: 20px;
-      h4 {
-        font-size: 13px;
-      }
-    }
-
-    .gittu-modal-body {
-      h5 {
-        font-size: 14px;
-      }
-    }
-
-    .input-group {
-      flex-direction: column;
-      gap: 10px;
-
-      input,
-      &-dropdown {
-        width: 100%;
-      }
-
-      input,
-      button {
-        border-radius: 10px !important;
-      }
-    }
-
-    .presale-item-btn-groups {
-      flex-direction: column;
-    }
+    padding: 16px;
+    .gittu-modal-header { padding: 20px 20px 16px; }
+    .gittu-modal-body { padding: 20px; }
   }
 `;
 

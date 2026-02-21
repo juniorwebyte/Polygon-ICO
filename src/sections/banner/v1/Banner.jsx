@@ -26,60 +26,96 @@ const Banner = () => {
   return (
     <>
       <BannerWrapper>
+        {/* Background elements */}
+        <div className="bg-grid" />
+        <div className="bg-orb-center" />
+        <div className="scanline" />
+
+        {/* Floating particles */}
+        <div className="particles">
+          <div className="particle" />
+          <div className="particle" />
+          <div className="particle" />
+          <div className="particle" />
+          <div className="particle" />
+          <div className="particle" />
+        </div>
+
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <div className="mb-40 text-center">
-                <div className="mb-20">
-                  <h5 className="ff-outfit fw-600 text-white text-uppercase">
-                    {BannerData.presaleStatus}
-                  </h5>
+
+                {/* Status badge */}
+                <div className="mb-25 d-flex justify-content-center">
+                  <div className="presale-badge">
+                    <div className="dot" />
+                    <span>{BannerData.presaleStatus}</span>
+                  </div>
                 </div>
-                <div className="mb-20 d-flex justify-content-center">
+
+                {/* Countdown */}
+                <div className="mb-28 d-flex justify-content-center">
                   <Countdown endDate={stageEnd} font="orbitron" />
                 </div>
+
+                {/* Title */}
                 <div className="mb-20">
                   <h1 className="banner-title">
-                    {BannerData.title}
+                    <span className="gradient-word">{BannerData.title}</span>
                     <br />
                     {BannerData.title2}
                   </h1>
                 </div>
-                <h5 className="ff-outfit text-white">{BannerData.subtitle}</h5>
+
+                {/* Subtitle */}
+                <h5 className="banner-subtitle">{BannerData.subtitle}</h5>
               </div>
             </div>
           </div>
+
           <div className="row justify-content-center">
-            <div className="col-md-8">
-              <div className="mb-2 d-flex align-items-center justify-content-between gap-1 flex-wrap">
-                <h5 className="ff-orbitron fs-15 fw-600 text-white text-uppercase">
-                  Stage {currentStage} : {currentBonus}% Bonus !
-                </h5>
-                <h5 className="ff-orbitron fs-15 fw-600 text-white text-uppercase">
-                  {raisedToken} / {goalToken}
-                </h5>
+            <div className="col-md-8 col-lg-7">
+
+              {/* Presale card */}
+              <div className="presale-card mb-30">
+
+                {/* Stage info row */}
+                <div className="mb-12 d-flex align-items-center justify-content-between gap-1 flex-wrap">
+                  <span className="stage-info">
+                    Stage {currentStage} · {currentBonus}% Bonus
+                  </span>
+                  <span className="stage-amount">
+                    {raisedToken} / {goalToken}
+                  </span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="mb-24">
+                  <Progressbar done={tokenPercent} variant="dashed" />
+                </div>
+
+                {/* Price info */}
+                <div className="price-info mb-24">
+                  <div className="price-item">
+                    <div className="price-label">Current Price</div>
+                    <div className="price-value">1 {tokenSymbol} = ${currentPrice}</div>
+                  </div>
+                  <div className="price-item">
+                    <div className="price-label">Next Stage</div>
+                    <div className="price-value">${nextPrice}</div>
+                  </div>
+                </div>
+
+                {/* Buy button */}
+                <div className="buy-btn-wrap d-flex align-items-center justify-content-center">
+                  <Button variant="gradient" onClick={modalHandle}>
+                    Buy Now
+                  </Button>
+                </div>
               </div>
 
-              <div className="mb-30">
-                <Progressbar done={tokenPercent} variant="dashed" />
-              </div>
-
-              <div className="mb-30 text-center">
-                <p className="ff-orbitron fs-15 fw-600 text-white text-uppercase">
-                  1 {tokenSymbol} = {currentPrice} USD
-                </p>
-
-                <p className="ff-orbitron fs-15 fw-600 text-white text-uppercase">
-                  NEXT STAGE = {nextPrice} USD
-                </p>
-              </div>
-
-              <div className="mb-74 d-flex align-items-center justify-content-center">
-                <Button variant="gradient" onClick={modalHandle}>
-                  Buy now
-                </Button>
-              </div>
-
+              {/* Social links */}
               <ul className="social-links">
                 {FooterSocialLinks?.map((socialLinkItem, i) => (
                   <li key={i}>
@@ -101,10 +137,11 @@ const Banner = () => {
         </div>
       </BannerWrapper>
 
-      {/* buy now modal */}
       {isModalOpen && <Modal />}
     </>
   );
 };
 
 export default Banner;
+BANNERJS
+echo "✅ Banner JSX criado"

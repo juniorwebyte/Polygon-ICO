@@ -1,314 +1,130 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+const fadeInUp = keyframes`
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+`;
+
+const digitFlip = keyframes`
+  0%   { transform: rotateX(0deg); }
+  50%  { transform: rotateX(45deg); }
+  100% { transform: rotateX(0deg); }
+`;
+
+const glowNumber = keyframes`
+  0%, 100% { text-shadow: 0 0 20px #00F5C440; }
+  50%       { text-shadow: 0 0 40px #00F5C480, 0 0 80px #00F5C430; }
+`;
 
 const CountdownWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 12px;
+  animation: ${fadeInUp} 0.6s ease 0.3s both;
 
   .count-item {
-    display: flex;
-    align-items: baseline;
     position: relative;
-    &:not(:last-child) {
-      padding-right: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
 
-      &::before {
+    /* Separator */
+    &:not(:last-child)::after {
+      content: ":";
+      position: absolute;
+      right: -10px;
+      top: 8px;
+      font-family: ${({ theme }) => theme.fonts.secondary};
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1;
+      color: #00F5C450;
+    }
+
+    .count-box {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #0F152580 0%, #0F152540 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid #00F5C420;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+
+      &:hover {
+        border-color: #00F5C450;
+        box-shadow: 0 0 20px #00F5C420;
+      }
+
+      /* Corner accents */
+      &::before, &::after {
+        content: "";
         position: absolute;
-        content: ":";
-        top: 0;
-        right: -5px;
-        font-family: ${({ theme }) => theme.fonts.primary};
-        font-weight: 700;
-        font-size: 40px;
-        line-height: 60px;
-        color: ${({ theme }) => theme.colors.white}33;
+        width: 8px;
+        height: 8px;
+        border-color: #00F5C440;
+        border-style: solid;
+      }
+      &::before {
+        top: 4px;
+        left: 4px;
+        border-width: 1px 0 0 1px;
+      }
+      &::after {
+        bottom: 4px;
+        right: 4px;
+        border-width: 0 1px 1px 0;
       }
     }
   }
 
   .count {
-    font-family: ${({ theme }) => theme.fonts.primary};
+    font-family: ${({ theme }) => theme.fonts.secondary};
     font-weight: 700;
-    font-size: 40px;
-    line-height: 60px;
-    color: ${({ theme }) => theme.colors.white};
+    font-size: 28px;
+    line-height: 1;
+    color: #00F5C4;
+    animation: ${glowNumber} 3s ease-in-out infinite;
+    display: block;
+    text-align: center;
   }
 
   .label {
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 59px;
-    color: ${({ theme }) => theme.colors.white};
+    font-family: ${({ theme }) => theme.fonts.primary};
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.colors.white}50;
+    text-align: center;
   }
 
-  @media screen and (max-width: 1199px) {
-    gap: 20px;
-
-    .count-item {
-      &:not(:last-child) {
-        padding-right: 20px;
-
-        &::before {
-          font-size: 30px;
-          line-height: 50px;
-        }
-      }
-    }
-
-    .count {
-      font-size: 30px;
-      line-height: 50px;
-    }
-
-    .label {
-      font-size: 20px;
-      line-height: 50px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    gap: 10px;
-
-    .count-item {
-      &:not(:last-child) {
-        padding-right: 10px;
-
-        &::before {
-          font-size: 22px;
-          line-height: 40px;
-        }
-      }
-    }
-
-    .count {
-      font-size: 22px;
-      line-height: 40px;
-    }
-
-    .label {
-      font-size: 15px;
-      line-height: 40px;
-    }
-  }
-
-  ${({ size }) =>
-    size === "medium" &&
-    css`
-      gap: 20px;
-      .count-item {
-        &:not(:last-child) {
-          padding-right: 20px;
-
-          &::before {
-            font-weight: 700;
-            font-size: 30px;
-            line-height: 50px;
-            color: ${({ theme }) => theme.colors.white}33;
-          }
-        }
-      }
-
-      .count {
-        font-weight: 700;
-        font-size: 30px;
-        line-height: 50px;
-        color: ${({ theme }) => theme.colors.white};
-      }
-
-      .label {
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 50px;
-        color: ${({ theme }) => theme.colors.white};
-      }
-    `}
-
+  /* Orbitron variant */
   ${({ font }) =>
     font === "orbitron" &&
     css`
-      .count-item {
-        &:not(:last-child) {
-          &::before {
-            font-family: ${({ theme }) => theme.fonts.secondary};
-          }
-        }
-      }
-
       .count {
         font-family: ${({ theme }) => theme.fonts.secondary};
-      }
-
-      .label {
-        font-family: ${({ theme }) => theme.fonts.secondary};
+        font-size: 30px;
       }
     `}
 
-    ${({ font }) =>
-    font === "title" &&
-    css`
-      .count-item {
-        &:not(:last-child) {
-          &::before {
-            font-family: ${({ theme }) => theme.fonts.title};
-          }
-        }
-      }
+  @media screen and (max-width: 991px) {
+    gap: 10px;
+    .count-item .count-box { width: 62px; height: 62px; }
+    .count { font-size: 24px; }
+  }
 
-      .count {
-        font-family: ${({ theme }) => theme.fonts.title};
-      }
-
-      .label {
-        font-family: ${({ theme }) => theme.fonts.title};
-      }
-    `}
-
-    ${({ font }) =>
-    font === "title2" &&
-    css`
-      gap: 20px;
-      .count-item {
-        &:not(:last-child) {
-          padding-right: 20px;
-          &::before {
-            font-family: ${({ theme }) => theme.fonts.title2};
-            font-size: 50px;
-            font-weight: 400;
-            line-height: 50px;
-            color: ${({ theme }) => theme.colors.white}66;
-          }
-        }
-      }
-
-      .count {
-        font-family: ${({ theme }) => theme.fonts.title2};
-        font-size: 50px;
-        font-weight: 400;
-        line-height: 50px;
-        background: linear-gradient(
-          180deg,
-          #fff 0%,
-          rgba(255, 255, 255, 0.2) 100%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .label {
-        font-family: ${({ theme }) => theme.fonts.title2};
-        font-size: 50px;
-        font-weight: 400;
-        line-height: 50px;
-        background: linear-gradient(
-          180deg,
-          #fff 0%,
-          rgba(255, 255, 255, 0.2) 100%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-    `}
-
-    ${({ variant }) =>
-    variant === "v2" &&
-    css`
-      gap: 20px;
-      .count-item {
-        &:not(:last-child) {
-          padding-right: 20px;
-          &::before {
-            font-family: ${({ theme }) => theme.fonts.title2};
-            font-size: 40px;
-            font-weight: 400;
-            line-height: 40px;
-            color: ${({ theme }) => theme.colors.white}66;
-          }
-        }
-      }
-
-      .count {
-        font-family: ${({ theme }) => theme.fonts.title2};
-        font-size: 40px;
-        font-weight: 400;
-        line-height: 40px;
-        background: linear-gradient(
-          180deg,
-          #fff 0%,
-          rgba(255, 255, 255, 0.2) 100%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .label {
-        font-family: ${({ theme }) => theme.fonts.title2};
-        font-size: 40px;
-        font-weight: 400;
-        line-height: 40px;
-        background: linear-gradient(
-          180deg,
-          #fff 0%,
-          rgba(255, 255, 255, 0.2) 100%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-    `}
-
-    @media screen and (max-width: 480px) {
-    ${({ font }) =>
-      font === "title2" &&
-      css`
-        gap: 10px;
-        .count-item {
-          &:not(:last-child) {
-            padding-right: 10px;
-            &::before {
-              font-size: 40px;
-              line-height: 40px;
-            }
-          }
-        }
-
-        .count {
-          font-size: 40px;
-          line-height: 40px;
-        }
-
-        .label {
-          font-size: 40px;
-          line-height: 40px;
-        }
-      `}
-
-    ${({ variant }) =>
-      variant === "v2" &&
-      css`
-        gap: 10px;
-        .count-item {
-          &:not(:last-child) {
-            padding-right: 10px;
-            &::before {
-              font-size: 30px;
-              line-height: 30px;
-            }
-          }
-        }
-
-        .count {
-          font-size: 30px;
-          line-height: 30px;
-        }
-
-        .label {
-          font-size: 30px;
-          line-height: 30px;
-        }
-      `}
+  @media screen and (max-width: 575px) {
+    gap: 8px;
+    .count-item .count-box { width: 54px; height: 54px; }
+    .count { font-size: 20px; }
+    .count-item:not(:last-child)::after { font-size: 22px; right: -8px; }
   }
 `;
 
