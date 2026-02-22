@@ -1,0 +1,163 @@
+Você deve:
+Gerar um par de chaves SSH
+Entender a diferença entre chave pública e chave privada
+Entregar somente a chave pública
+Configurar sua chave na intranet da 42
+
+Arquivo para entrega: id_rsa_pub
+Não é id_rsa.pub
+Não é a chave privada
+Não é o par completo
+
+Conceito Fundamental — Criptografia Assimétrica
+SSH usa criptografia com:
+Chave privada → fica no seu computador (NUNCA compartilhe)
+Chave pública → pode ser compartilhada
+Quando você faz push no Git:
+O servidor verifica se sua chave pública está cadastrada
+Ele envia um desafio criptográfico
+Seu computador responde usando sua chave privada
+Se bater → acesso liberado
+Sem senha.
+
+Passo a passo correto
+Gerar a chave SSH
+Execute: ssh-keygen -t rsa -b 4096 -C "seu_email_da_42"
+Quando perguntar onde salvar: Enter file in which to save the key:
+Apenas pressione ENTER.
+
+Resultado padrão:
+~/.ssh/id_rsa
+~/.ssh/id_rsa.pub
+
+Entendendo os arquivos gerados
+Arquivo	O que é	Pode enviar?
+id_rsa	chave privada	NUNCA
+id_rsa.pub chave pública	SIM
+
+Criar a pasta do exercício
+mkdir ex03
+cd ex03
+
+Copiar a chave pública para o arquivo de entrega
+cp ~/.ssh/id_rsa.pub id_rsa_pub
+
+Note:
+Nome do arquivo deve ser exatamente: id_rsa_pub
+Sem extensão .pub
+
+Verifique: cat id_rsa_pub
+
+Ela deve começar com:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQ...
+
+Atualizar chave na intranet 42
+Acesse a intranet
+Vá até configurações de perfil
+Cole o conteúdo da sua chave pública
+Salve
+
+Estrutura final
+ex03/
+└── id_rsa_pub
+
+Como testar se funcionou
+Execute: ssh -T git@vogsphere.42sp.org.br
+Se tudo estiver correto, você verá:
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+
+Erros que reprovam
+
+❌ Enviar id_rsa (chave privada)
+❌ Nomear errado o arquivo
+❌ Gerar chave ed25519 se a 42 exigir rsa
+❌ Esquecer de atualizar na intranet
+
+🎓 O que você aprendeu
+
+O que é criptografia assimétrica
+
+Diferença entre chave pública e privada
+
+Como o Git usa SSH
+
+Como autenticação sem senha funciona
+
+Segurança básica em sistemas Unix
+
+🔥 Observação Importante
+
+Hoje em dia o padrão moderno é: ssh-keygen -t ed25519
+Mas a 42 pode exigir RSA, então siga as instruções do enunciado para garantir que sua chave seja aceita.
+
+Onde está o endereço SSH de verdade?
+
+Dentro da intranet da 42 (projects.intra.42.fr):
+
+Faça login com seu usuário.
+
+Clique em um projeto qualquer (pode ser “Piscine C” ou similar).
+
+No topo da página do projeto, você verá opções como:
+
+Clone
+
+HTTPS
+
+SSH
+
+Clique na aba SSH.
+
+Você verá algo parecido com: 
+git@vogsphere-v2.42sp.org.br:login/projeto.git
+ou, em algumas versões:
+git@git.42sp.org.br:login/projeto.git
+Esse é o endereço que você deve usar.
+
+Como testar sua chave SSH com o endereço correto
+Suponha que a intranet te mostre:
+git@vogsphere-v2.42sp.org.br:junior/libft.git
+Então, para testar sua chave, execute:
+ssh -T git@vogsphere-v2.42sp.org.br
+Importante: você não inclui o :junior/libft.git no teste — só o host.
+Se estiver tudo certo, você deverá ver uma mensagem parecida com:
+Hi junior! You've successfully authenticated, but GitHub does not provide shell access.
+Isso confirma que sua chave SSH está funcionando corretamente com o endereço da 42.
+
+Checklist de configuração SSH
+Verifique sua chave pública
+cat ~/.ssh/id_rsa.pub
+Deve começar com: ssh-rsa AAAA...
+
+Copie para o arquivo de entrega
+Se ainda não fez: cp ~/.ssh/id_rsa.pub ~/ex03/id_rsa_pub
+
+Garanta que sua chave está na intranet
+Dentro da 42:
+Perfil → SSH Keys
+Cole o conteúdo de id_rsa_pub
+Salve
+
+Erros comuns que causam “Could not resolve hostname”
+
+✔️ Usar domínio errado (sem “-v2” ou com erro de escrita)
+✔️ Tentar resolver DNS antes da chave valida
+✔️ Tentativa antes de adicionar SSH na intranet
+
+📍 Como descobrir o endereço correto (resumo)
+
+Dentro da intranet, vá em:
+
+Projects → (selecione um projeto) → Clone
+
+
+Lá escolha SSH e copie o endereço.
+
+Depois use:
+
+ssh -T git@DOMINIO_DO_REPO
+
+
+Exemplo (com host correto):
+
+ssh -T git@vogsphere-v2.42sp.org.br

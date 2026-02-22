@@ -1,0 +1,152 @@
+Vamos fazer como uma aula, passo a passo, para você realmente dominar o find.
+
+📚 Exercício 08 — clean
+🎯 Objetivo
+
+Criar um arquivo chamado clean contendo um único comando que:
+
+Procure no diretório atual e subdiretórios
+
+Encontre arquivos que:
+
+terminam com ~
+
+OU começam e terminam com #
+
+Mostre os arquivos encontrados
+
+Delete esses arquivos
+
+Tudo isso em apenas um comando
+
+Sem:
+
+;
+
+&&
+
+múltiplos comandos
+
+🧠 Conceito importante: o comando find
+
+Sintaxe básica:
+
+find [onde_procurar] [condições] [ações]
+
+
+Exemplo simples:
+
+find . -name "*.c"
+
+
+Procura arquivos .c no diretório atual.
+
+🛠 Construindo o comando passo a passo
+1️⃣ Procurar no diretório atual e subpastas
+find .
+
+
+O . significa “a partir daqui”.
+
+2️⃣ Garantir que são apenas arquivos
+-type f
+
+
+Sem isso, diretórios também poderiam ser incluídos.
+
+3️⃣ Primeira condição: arquivos que terminam com ~
+-name "*~"
+
+
+O * significa “qualquer coisa antes”.
+
+4️⃣ Segunda condição: arquivos que começam e terminam com
+-name "#*#"
+
+
+Explicação:
+
+# → começa com #
+
+* → qualquer coisa no meio
+
+# → termina com #
+
+5️⃣ Usar OR entre as condições
+
+No find, OR é:
+
+-o
+
+
+Mas precisamos agrupar as condições:
+
+\( condição1 -o condição2 \)
+
+
+⚠️ As barras \ são obrigatórias para o shell não interpretar os parênteses.
+
+6️⃣ Mostrar os arquivos encontrados
+-print
+
+7️⃣ Deletar os arquivos encontrados
+-delete
+
+✅ Comando final (único comando exigido)
+
+Coloque exatamente isso dentro do arquivo clean:
+
+find . -type f \( -name "*~" -o -name "#*#" \) -print -delete
+
+📂 Como criar corretamente o exercício
+1️⃣ Criar pasta
+mkdir ex08
+cd ex08
+
+2️⃣ Criar arquivo clean
+touch clean
+
+3️⃣ Colocar o comando dentro
+nano clean
+
+
+Cole o comando.
+
+Salve.
+
+🧪 Como testar
+
+Crie arquivos de teste:
+
+touch lixo~
+touch #temp#
+touch normal.txt
+mkdir pasta
+touch pasta/outro~
+
+
+Execute:
+
+bash clean
+
+
+Você deve ver:
+
+./lixo~
+./#temp#
+./pasta/outro~
+
+
+E esses arquivos serão removidos.
+
+🧠 O que você aprendeu aqui
+
+Uso avançado de find
+
+Agrupamento lógico com \( \)
+
+Operador OR (-o)
+
+Execução de ações (-print, -delete)
+
+Manipulação recursiva de arquivos

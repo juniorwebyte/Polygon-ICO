@@ -1,0 +1,93 @@
+Crie a pasta e entre nela
+mkdir ex02
+cd ex02
+
+Crie os diretórios
+mkdir test0
+mkdir test2
+
+Ajuste permissões:
+chmod 651 test0
+chmod 504 test2
+
+Resultados:
+drwx--xr-x → 651
+dr-x---r-- → 504
+
+Crie test1 (4 bytes)
+printf "ABCD" > test1
+chmod 714 test1
+-rwx--xr-- → 714
+
+Crie test3 (1 byte)
+printf "X" > test3
+chmod 404 test3
+
+Crie o hard link test5
+ln test1 test5
+Isso faz com que:
+test3 e test5 tenham link count = 2
+Mesmo inode
+Mesmo tamanho (1 byte)
+
+Crie test4 (2 bytes)
+printf "Hi" > test4
+chmod 641 test4
+-rw-r----- → 641
+
+Crie o link simbólico test6
+ln -s test0 test6
+O tamanho será 5 bytes (test0)
+
+Ajuste permissões finais (ordem importa)
+chmod 404 test3
+chmod 404 test5
+(garantia após o hard link)
+
+Verificação FINAL (obrigatória)
+ls -l
+Você deve ver algo visual e semanticamente equivalente ao enunciado.
+
+Para confirmar hard link:
+ls -li test3 test5
+Mesmo número de inode = correto
+
+Criando o arquivo de entrega
+Nome do arquivo é exo2.tar (com letra O, não zero)
+tar -cvf ex02.tar *
+
+Verifique: tar -tf exo2.tar
+
+Saída esperada:
+test0
+test1
+test2
+test3
+test4
+test5
+test6
+
+Estrutura final
+ex02/
+├── test0/
+├── test1
+├── test2/
+├── test3
+├── test4
+├── test5
+├── test6 -> test0
+└── exo2.tar
+
+O que você aprendeu neste exercício
+
+Leitura avançada de ls -l
+
+Controle exato de permissões
+
+Diferença hard link vs symlink
+
+Como o tamanho de um link simbólico funciona
+
+Inodes e link count
+
+Compactação correta com tar

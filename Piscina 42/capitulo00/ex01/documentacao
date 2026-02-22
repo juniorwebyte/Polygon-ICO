@@ -1,0 +1,27 @@
+Crie a pasta do exercício
+mkdir ex01
+cd ex01
+
+Crie o arquivo testShell00 com exatamente 40 bytes
+Use este comando exato:
+printf "1234567890123456789012345678901234567890" > testShell00
+Isso escreve 40 caracteres = 40 bytes
+
+Verifique: wc -c testShell00
+Saída correta: 40 testShell00
+
+Ajuste as permissões corretamente
+chmod 455 testShell00
+Verifique: ls -l testShell00
+Saída esperada (similar): -r--r-xr-x 1 user user 40 Jun  1 23:42 testShell00
+
+Criando o arquivo para entrega
+
+Agora sim, gere o .tar exatamente como pedido: tar -cf testShell00.tar testShell00
+Verifique: tar -tf testShell00.tar
+Saída correta: testShell00
+
+Estrutura final de entrega
+ex01/
+├── testShell00
+└── testShell00.tar

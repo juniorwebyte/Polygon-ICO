@@ -1,35 +1,16 @@
-import styled, { keyframes } from "styled-components";
-
-const fadeInDown = keyframes`
-  from { opacity: 0; transform: translateY(-20px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-const shimmer = keyframes`
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-`;
+import styled from "styled-components";
 
 const HeaderWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 0;
-  transition: all 0.4s ease;
-  animation: ${fadeInDown} 0.6s ease;
-
-  background: linear-gradient(180deg, rgba(8,11,20,0.95) 0%, rgba(8,11,20,0.80) 100%);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0,245,196,0.08);
+  padding: 25px 0;
+  transition: 0.3s;
 
   &.sticky {
-    background: rgba(8,11,20,0.97);
-    backdrop-filter: blur(30px);
-    border-bottom-color: rgba(0,245,196,0.15);
-    box-shadow: 0 4px 40px rgba(0,0,0,0.4);
-    padding: 14px 0;
+    background: ${({ theme }) => theme.colors.bgHeader};
   }
 
   .gittu-header-content {
@@ -41,7 +22,7 @@ const HeaderWrapper = styled.div`
   .gittu-header-left {
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 60px;
   }
 
   .gittu-header-right {
@@ -50,114 +31,99 @@ const HeaderWrapper = styled.div`
     gap: 20px;
   }
 
-  /* Logo */
-  .gittu-logo {
-    img { height: 36px; }
+  .gittu-header-right-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }
 
-  /* Navigation */
   .gittu-header-menu {
-    ul {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-
-      li a {
-        font-family: ${({ theme }) => theme.fonts.primary};
-        font-weight: 500;
-        font-size: 14px;
-        letter-spacing: 0.04em;
-        color: ${({ theme }) => theme.colors.white}80;
-        transition: all 0.3s ease;
-        position: relative;
-
-        &::after {
-          content: "";
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          width: 0;
-          height: 1px;
-          background: linear-gradient(90deg, #00F5C4, #4A9EFF);
-          transition: width 0.3s ease;
-        }
-
-        &:hover {
-          color: #00F5C4;
-          &::after { width: 100%; }
-        }
-      }
+    li a {
+      font-family: ${({ theme }) => theme.fonts.primary};
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 30px;
+      text-transform: uppercase;
+      color: ${({ theme }) => theme.colors.white};
     }
   }
 
-  /* Social icons in header */
-  .header-social-links {
+  .gittu-header-menu-toggle {
+    display: none;
+
+    .menu-toggler {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: ${({ theme }) => theme.colors.white};
+      font-size: 30px;
+    }
+  }
+
+  .social-links {
     display: flex;
     align-items: center;
-    gap: 10px;
-
-    a {
-      width: 36px;
-      height: 36px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+    gap: 20px;
+    li a {
+      flex: 0 0 auto;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
+      background: ${({ theme }) => theme.colors.white}26;
+      backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
-
-      img { width: 16px; height: 16px; }
-
-      &:hover {
-        background: rgba(0,245,196,0.1);
-        border-color: rgba(0,245,196,0.3);
-        box-shadow: 0 0 15px rgba(0,245,196,0.15);
-        transform: translateY(-2px);
+      transition: 0.3s;
+      img {
+        width: 20px;
+        transition: 0.3s;
       }
-    }
-  }
-
-  /* Connect wallet button */
-  .connect-btn-wrap button {
-    font-family: ${({ theme }) => theme.fonts.primary} !important;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #00F5C4 !important;
-    background: rgba(0,245,196,0.08) !important;
-    border: 1px solid rgba(0,245,196,0.25) !important;
-    border-radius: 50px !important;
-    padding: 10px 22px !important;
-    transition: all 0.3s ease !important;
-
-    &:hover {
-      background: rgba(0,245,196,0.15) !important;
-      border-color: rgba(0,245,196,0.5) !important;
-      box-shadow: 0 0 20px rgba(0,245,196,0.2) !important;
-    }
-  }
-
-  /* Mobile menu toggle */
-  .navbar-toggler {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 8px 10px;
-    color: ${({ theme }) => theme.colors.white};
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: rgba(0,245,196,0.1);
-      border-color: rgba(0,245,196,0.3);
+      &:hover {
+        opacity: 0.7;
+      }
     }
   }
 
   @media screen and (max-width: 991px) {
-    .gittu-header-menu { display: none; }
-    .header-social-links { display: none; }
+    .gittu-header-menu-toggle {
+      display: block;
+    }
+
+    .gittu-header-menu {
+      display: none;
+    }
+
+    .gittu-header-left {
+      gap: 30px;
+    }
+
+    .gittu-header-right {
+      flex-direction: row-reverse;
+
+      .social-links {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .gittu-header-left {
+      gap: 15px;
+    }
+
+    .gittu-header-logo {
+      flex: 0 0 auto;
+      max-width: 100px;
+    }
+
+    .dropdown-demo {
+      display: none;
+    }
+
+    .gittu-header-right {
+      gap: 10px;
+    }
   }
 `;
 

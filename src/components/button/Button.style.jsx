@@ -1,167 +1,223 @@
-import styled, { css, keyframes } from "styled-components";
-
-const shimmer = keyframes`
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-`;
-
-const glowPulse = keyframes`
-  0%, 100% { box-shadow: 0 0 15px #00F5C430, 0 4px 30px #00F5C420; }
-  50%       { box-shadow: 0 0 30px #00F5C460, 0 4px 50px #00F5C440; }
-`;
-
-const ripple = keyframes`
-  0%   { transform: scale(0); opacity: 0.6; }
-  100% { transform: scale(2.5); opacity: 0; }
-`;
+import styled, { css } from "styled-components";
 
 const ButtonWrapper = styled.button`
-  background: #00F5C410;
-  backdrop-filter: blur(10px);
-  border-radius: 50px;
-  border: 1px solid #00F5C430;
-  padding: 15px 40px;
-  font-family: ${({ theme }) => theme.fonts.primary};
-  font-weight: 600;
-  font-size: 14px;
+  background: ${({ theme }) => theme.colors.primary}26;
+  backdrop-filter: blur(7.5px);
+  border-radius: 30px;
+  border: 0;
+  padding: 17px 47px;
+  font-family: ${({ theme }) => theme.fonts.outfit};
+  font-weight: 700;
+  font-size: 15px;
   line-height: 26px;
-  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #00F5C4;
+  color: ${({ theme }) => theme.colors.primary};
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
+  transition: 0.3s;
 
   &:hover {
-    background: #00F5C420;
-    border-color: #00F5C460;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px #00F5C420;
-  }
-
-  &:active {
-    transform: translateY(0px);
-  }
-
-  /* Ripple effect */
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    background: #00F5C440;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    transition: none;
-  }
-
-  &:active::after {
-    animation: ${ripple} 0.5s ease;
+    background: ${({ theme }) => theme.colors.primary}40;
   }
 
   ${({ size }) =>
     size === "large" &&
     css`
-      padding: 16px;
+      padding: 17px;
       width: 100%;
-      background: linear-gradient(135deg, #00F5C4, #4A9EFF);
-      background-size: 200% 200%;
-      border: none;
-      color: #080B14;
-      font-weight: 700;
-      animation: ${shimmer} 3s linear infinite;
-      transition: all 0.3s ease;
+      background: ${({ theme }) => theme.colors.primary};
+      color: #0e1117;
+      transition: 0.3s;
 
       &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px #00F5C440;
-        animation: ${shimmer} 2s linear infinite, ${glowPulse} 2s ease infinite;
+        background: ${({ theme }) => theme.colors.primary}b3;
       }
     `}
 
   ${({ variant }) =>
     variant === "green" &&
     css`
-      padding: 16px;
-      min-width: 220px;
-      background: linear-gradient(135deg, #00F5C4, #4A9EFF);
-      background-size: 200% 200%;
-      border: none;
+      padding: 17px;
+      min-width: 245px;
+      background: ${({ theme }) => theme.colors.conicGradient};
       border-radius: 50px;
-      color: #080B14;
-      font-weight: 700;
-      animation: ${shimmer} 3s linear infinite;
+      color: ${({ theme }) => theme.colors.white};
+      transition: 0.3s;
 
       &:hover {
-        box-shadow: 0 8px 40px #00F5C450;
-        transform: translateY(-2px);
+        background: ${({ theme }) => theme.colors.conicGradient};
       }
     `}
 
-  ${({ variant }) =>
+    ${({ variant }) =>
     variant === "yellow" &&
     css`
-      padding: 16px;
-      min-width: 220px;
-      background: #FFD166;
-      border: none;
+      padding: 17px;
+      min-width: 245px;
+      background: ${({ theme }) => theme.colors.yellow};
       border-radius: 50px;
-      color: #080B14;
-      font-weight: 700;
-      transition: all 0.3s ease;
+      color: ${({ theme }) => theme.colors.black};
+      transition: 0.3s;
 
       &:hover {
-        background: #FFE08A;
-        box-shadow: 0 8px 30px #FFD16640;
-        transform: translateY(-2px);
+        background: ${({ theme }) => theme.colors.yellow};
       }
     `}
 
   ${({ variant }) =>
     variant === "gradient" &&
     css`
-      padding: 18px 50px;
-      min-width: 260px;
-      background: linear-gradient(135deg, #00F5C4 0%, #4A9EFF 50%, #7B5EA7 100%);
-      background-size: 200% 200%;
-      border: none;
+      padding: 17px;
+      min-width: 270px;
+      background: ${({ theme }) => theme.colors.linearGradient};
       border-radius: 50px;
-      color: #080B14;
       font-weight: 700;
       font-size: 15px;
-      letter-spacing: 0.08em;
-      animation: ${shimmer} 4s linear infinite, ${glowPulse} 3s ease-in-out infinite;
-
-      &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 50px #00F5C450;
-        animation: ${shimmer} 2s linear infinite, ${glowPulse} 1.5s ease-in-out infinite;
-      }
-
-      &:active { transform: translateY(0); }
-    `}
-
-  ${({ variant }) =>
-    variant === "outline" &&
-    css`
-      background: transparent;
-      border: 1px solid #ffffff20;
+      line-height: 26px;
       color: ${({ theme }) => theme.colors.white};
+      transition: 0.3s;
 
       &:hover {
-        border-color: #00F5C450;
-        color: #00F5C4;
-        background: #00F5C410;
+        background: ${({ theme }) => theme.colors.linearGradient};
       }
     `}
+
+${({ variant }) =>
+    variant === "gradient2" &&
+    css`
+      padding: 17px;
+      min-width: 270px;
+      background: ${({ theme }) => theme.colors.linearGradient2};
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 26px;
+      color: ${({ theme }) => theme.colors.white};
+      transition: 0.3s;
+
+      &:hover {
+        background: ${({ theme }) => theme.colors.linearGradient2};
+      }
+    `}
+
+    ${({ variant }) =>
+    variant === "gradient3" &&
+    css`
+      padding: 17px;
+      min-width: 270px;
+      background: linear-gradient(90deg, #07e6f5 0%, #fc0cdf 100%);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 26px;
+      color: ${({ theme }) => theme.colors.white};
+      transition: 0.3s;
+
+      &:hover {
+        background: linear-gradient(90deg, #07e6f5 0%, #fc0cdf 100%);
+      }
+    `}
+
+    ${({ variant }) =>
+    variant === "gradient4" &&
+    css`
+      padding: 17px;
+      min-width: 270px;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #1dff96 0%, #bcff7b 100%);
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 26px;
+      color: ${({ theme }) => theme.colors.black};
+      transition: 0.3s;
+
+      &:hover {
+        background: linear-gradient(90deg, #1dff96 0%, #bcff7b 100%);
+      }
+    `}
+
+    ${({ variant }) =>
+    variant === "gradient5" &&
+    css`
+      padding: 17px;
+      min-width: 270px;
+      border-radius: 30px;
+      background: linear-gradient(
+        90deg,
+        #3c38ff 0%,
+        #8c45ff 33.33%,
+        #ff36c7 68.23%,
+        #ffa336 100%
+      );
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 26px;
+      color: ${({ theme }) => theme.colors.white};
+      text-transform: uppercase;
+
+      &:hover {
+        background: linear-gradient(
+          90deg,
+          #3c38ff 0%,
+          #8c45ff 33.33%,
+          #ff36c7 68.23%,
+          #ffa336 100%
+        );
+      }
+    `}
+
+    ${({ variant }) =>
+    variant === "gradient6" &&
+    css`
+      padding: 17px;
+      min-width: 270px;
+      border-radius: 0;
+      background: linear-gradient(90deg, #1dff96 0%, #bcff7b 100%);
+      backdrop-filter: blur(10px);
+      font-family: ${({ theme }) => theme.colors.primary};
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 26px;
+      color: ${({ theme }) => theme.colors.black};
+      text-transform: uppercase;
+
+      &:hover {
+        background: linear-gradient(90deg, #bcff7b 0%, #1dff96 100%);
+      }
+    `}
+
+    ${({ variant }) =>
+    variant === "gradient7" &&
+    css`
+      padding: 17px;
+      min-width: 270px;
+      width: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #1dff96 0%, #bcff7b 100%);
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 26px;
+      color: ${({ theme }) => theme.colors.black};
+      transition: 0.3s;
+
+      &:hover {
+        background: linear-gradient(90deg, #1dff96 0%, #bcff7b 100%);
+      }
+    `}
+    
+  @media screen and (max-width: 575px) {
+    ${({ variant }) =>
+      variant === "green" &&
+      css`
+        min-width: unset;
+        width: 100%;
+      `}
+  }
 `;
 
 export default ButtonWrapper;

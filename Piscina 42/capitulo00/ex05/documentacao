@@ -1,0 +1,268 @@
+Exercício 05 — git_commit.sh
+🎯 Objetivo
+
+Criar um script chamado:
+
+git_commit.sh
+
+
+Que imprima:
+
+Os hashes (IDs) dos últimos 5 commits
+
+Um por linha
+
+Apenas o hash
+
+Nada além disso
+
+Exemplo esperado:
+
+baa23b54f0adb7bf42623d6d0a6ed4587e11412a
+2f52d74b1387fa80eea844969e8dc5483b531ac1
+...
+
+🧠 Conceitos envolvidos
+1️⃣ O que é um commit ID?
+
+É o hash SHA-1 (40 caracteres hexadecimais):
+
+e94d0b448c03ec633f16d84d63beaef9ae7e7be8
+
+2️⃣ Como extrair apenas os hashes?
+
+Manual do git (man git log):
+
+Opção importante:
+
+--pretty=format:
+
+
+Para mostrar apenas o hash completo:
+
+%H
+
+3️⃣ Limitar quantidade de commits
+
+Opção:
+
+-n 5
+
+
+ou
+
+-5
+
+✅ Comando correto
+
+O comando ideal é:
+
+git log -5 --pretty=format:%H
+
+
+Isso produz exatamente:
+
+5 commits
+
+Apenas hash completo
+
+Um por linha
+
+Sem texto adicional
+
+📂 Criando o script corretamente
+1️⃣ Criar pasta
+mkdir ex05
+cd ex05
+
+2️⃣ Criar o arquivo
+nano git_commit.sh
+
+
+Conteúdo do arquivo:
+
+#!/bin/sh
+git log -5 --pretty=format:%H
+
+
+Salve e saia.
+
+3️⃣ Tornar executável
+chmod +x git_commit.sh
+
+🔍 Teste correto
+
+Dentro de um repositório git com commits:
+
+bash git_commit.sh
+
+
+Ou:
+
+./git_commit.sh
+
+
+Teste igual ao enunciado:
+
+bash git_commit.sh | cat -e
+
+
+Você verá:
+
+hash1$
+hash2$
+hash3$
+hash4$
+hash5$
+
+⚠️ Erros que reprovam
+
+❌ Usar git log | head -5 (mostra texto extra)
+❌ Usar %h (hash curto)
+❌ Não colocar shebang (#!/bin/sh)
+❌ Esquecer permissão de execução
+❌ Colocar texto extra no script
+
+📦 Estrutura final
+ex05/
+└── git_commit.sh
+
+🎓 O que você aprendeu
+
+Como usar git log
+
+Como formatar saída do Git
+
+O que é %H
+
+Como criar um script shell básico
+
+Shebang e permissões executáveis
+
+🧠 Mentalidade 42
+
+Quando pedem:
+
+Seu script será testado em nosso ambiente
+
+Significa:
+
+Ele será executado dentro de um repositório git
+
+Seu script precisa funcionar sem argumentos
+
+Não pode depender do seu ambiente pessoal
+
+O que significa esse erro
+fatal: your current branch 'master' does not have any commits yet
+
+
+Tradução técnica:
+
+👉 Você está dentro de um repositório Git
+👉 Mas ainda não existe nenhum commit
+
+Logo:
+
+git log
+
+
+não tem o que mostrar.
+
+Seu script está funcionando corretamente.
+
+🧠 Como o Git funciona nesse ponto
+
+Um repositório recém-criado com:
+
+git init
+
+
+Cria:
+
+Diretório .git
+
+Branch master (ou main)
+
+Nenhum commit ainda
+
+O primeiro commit cria o primeiro snapshot.
+
+✅ Como resolver
+
+Você precisa criar commits para testar.
+
+Execute:
+
+echo "teste" > arquivo.txt
+git add arquivo.txt
+git commit -m "primeiro commit"
+
+
+Se o Git reclamar de identidade:
+
+git config --global user.name "Seu Nome"
+git config --global user.email "seu@email.com"
+
+
+Depois tente novamente.
+
+🔁 Criar mais commits para testar os 5
+echo "2" >> arquivo.txt
+git commit -am "segundo commit"
+
+echo "3" >> arquivo.txt
+git commit -am "terceiro commit"
+
+echo "4" >> arquivo.txt
+git commit -am "quarto commit"
+
+echo "5" >> arquivo.txt
+git commit -am "quinto commit"
+
+
+Agora execute:
+
+bash git_commit.sh
+
+
+Você verá 5 hashes.
+
+🔎 Entendimento importante
+
+O script:
+
+git log -5 --pretty=format:%H
+
+
+Funciona apenas se:
+
+Você está dentro de um repositório git
+
+Existem commits
+
+A branch atual tem histórico
+
+📌 Verificação rápida
+
+Para saber se você está dentro de um repo:
+
+git status
+
+
+Se aparecer:
+
+fatal: not a git repository
+
+
+Você não está dentro de um repo.
+
+🎓 O que você aprendeu
+
+O que é um repositório vazio
+
+Que git log depende de commits
+
+Que erro do Git não significa erro no script
+
+Como criar commits de teste

@@ -1,0 +1,18 @@
+Crie a pasta do exercício
+mkdir ex00
+cd ex00
+
+Crie o arquivo z com o conteúdo correto
+Forma mais segura (recomendada): echo "Z" > z
+O echo já adiciona a quebra de linha automaticamente.
+
+Verificação Importante (Detalhe que reprova alunos)
+cat -e z
+Saída correta: Z$
+O $ indica a quebra de linha
+Se aparecer apenas Z sem $, o exercício está errado
+
+Estrutura Final de Entrega 
+ex00/
+└── z
+Nada mais. Nada menos.

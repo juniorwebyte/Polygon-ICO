@@ -1,0 +1,268 @@
+Exercício 06 — git_ignore.sh
+🎯 Objetivo
+
+Criar um script:
+
+git_ignore.sh
+
+
+Que liste:
+
+Todos os arquivos existentes que estão sendo ignorados pelo Git
+
+Importante:
+
+Apenas arquivos que existem fisicamente
+
+Que estejam sendo ignorados por .gitignore
+
+Um por linha
+
+Nada extra
+
+🧠 Entendendo o problema corretamente
+
+Arquivos ignorados são:
+
+Arquivos que existem
+
+Mas o Git não rastreia
+
+Porque estão listados no .gitignore
+
+Exemplo:
+
+Se .gitignore contém:
+
+*.o
+.DS_Store
+
+
+E esses arquivos existem → devem aparecer.
+
+❌ O que NÃO usar
+
+Não use:
+
+git status
+
+
+Porque a saída é textual e instável.
+
+Não use parsing com grep ou awk.
+
+O enunciado diz:
+
+RTFM
+
+Então precisamos usar o comando correto do Git.
+
+✅ Comando correto (plumbing command)
+
+O comando ideal é:
+
+git ls-files --others -i --exclude-standard
+
+🔎 Explicando cada parte
+git ls-files
+
+Lista arquivos conhecidos pelo Git.
+
+--others
+
+Mostra arquivos que NÃO estão sendo rastreados.
+
+-i
+
+Mostra apenas arquivos ignorados.
+
+--exclude-standard
+
+Considera:
+
+.gitignore
+
+.git/info/exclude
+
+configurações globais
+
+✅ Resultado final esperado
+
+Ele listará:
+
+.DS_Store
+mywork.c~
+
+
+Um por linha.
+
+📂 Criando o script corretamente
+1️⃣ Criar pasta
+mkdir ex06
+cd ex06
+
+2️⃣ Criar o script
+nano git_ignore.sh
+
+
+Conteúdo:
+
+#!/bin/sh
+git ls-files --others -i --exclude-standard
+
+
+Salve.
+
+3️⃣ Tornar executável
+chmod +x git_ignore.sh
+
+🔍 Teste
+
+Dentro de um repositório que tenha .gitignore configurado:
+
+bash git_ignore.sh | cat -e
+
+
+Saída exemplo:
+
+.DS_Store$
+mywork.c~$
+
+⚠️ Erros que reprovam
+
+❌ Usar git status | grep
+❌ Não usar --exclude-standard
+❌ Listar arquivos que não existem
+❌ Colocar texto extra
+❌ Esquecer o shebang
+
+🎓 O que você aprendeu
+
+Diferença entre comandos porcelain e plumbing
+
+Como Git identifica arquivos ignorados
+
+Uso correto de flags combinadas
+
+Leitura estratégica do manual
+
+🧠 Nível Piscina
+
+Se você resolveu esse sem procurar a resposta, você está começando a pensar como a 42 espera.
+
+Se a saída está vazia, existem apenas três possibilidades reais:
+
+🎯 1️⃣ Não existem arquivos ignorados
+
+O comando:
+
+git ls-files --others -i --exclude-standard
+
+
+Só lista arquivos que:
+
+Existem fisicamente
+
+Estão sendo ignorados por .gitignore
+
+Não estão sendo rastreados
+
+Se não houver nenhum → saída vazia é comportamento correto.
+
+✅ Teste prático
+
+Dentro do seu repositório, faça:
+
+touch teste.tmp
+echo "*.tmp" > .gitignore
+
+
+Agora execute:
+
+bash git_ignore.sh
+
+
+Agora deve aparecer:
+
+teste.tmp
+
+
+Se aparecer → seu script está correto.
+
+🎯 2️⃣ Você não está dentro de um repositório Git
+
+Teste:
+
+git status
+
+
+Se aparecer:
+
+fatal: not a git repository
+
+
+Então o script não tem como funcionar.
+
+Entre em um repo ou faça:
+
+git init
+
+🎯 3️⃣ O arquivo já está sendo rastreado
+
+Se você criou um arquivo antes de colocar no .gitignore, ele já pode estar no index.
+
+Teste:
+
+git ls-files
+
+
+Se o arquivo aparecer ali, ele não é considerado ignorado.
+
+Para corrigir:
+
+git rm --cached nome_do_arquivo
+
+🔎 Diagnóstico rápido
+
+Execute agora:
+
+git ls-files --others --exclude-standard
+
+
+Se listar arquivos → eles não estão sendo ignorados.
+
+Depois:
+
+git check-ignore *
+
+
+Isso mostra quais estão sendo ignorados.
+
+📌 Conclusão importante
+
+Se a saída está vazia, isso normalmente significa:
+
+Não há arquivos ignorados existentes no repositório.
+
+E isso está correto.
+
+🧠 Como a 42 testa isso
+
+Eles testam seu script dentro de um ambiente onde:
+
+Já existem arquivos ignorados
+
+Já existe .gitignore
+
+Seu script só precisa rodar corretamente
+
+Eles não testam no seu ambiente vazio.
+
+Se quiser, me mostre o resultado de:
+
+git status
+cat .gitignore
+ls -a
+
+
+Que eu te digo exatamente o que está acontecendo.

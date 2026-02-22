@@ -1,0 +1,104 @@
+Esse é um dos exercícios mais inteligentes da Piscina.
+
+Aqui você precisa entender:
+
+diff
+
+patch
+
+Redirecionamento
+
+Manipulação de arquivos
+
+Leitura precisa do enunciado
+
+Não é sobre escrever texto manualmente.
+
+📌 Exercício 07 — arquivo b
+🎯 O que o enunciado quer
+
+Você tem um arquivo a.
+
+Ele mostra o conteúdo usando:
+
+cat -e a
+
+
+Depois diz:
+
+diff a b > sw.diff
+
+
+E menciona:
+
+man patch
+
+
+⚠️ Isso é uma pista enorme.
+
+🧠 O que realmente está acontecendo
+
+Eles querem que:
+
+Você crie um arquivo b
+
+De forma que diff a b gere um patch
+
+Que depois possa ser aplicado com patch
+
+Ou seja:
+
+👉 Você deve usar patch para gerar b, não escrever manualmente.
+
+🎯 Interpretação correta
+
+O arquivo a já existe no ambiente de correção.
+
+Você deve criar b tal que:
+
+diff a b > sw.diff
+
+
+gere um patch válido.
+
+Mas o enunciado mostra o conteúdo de a.
+
+Isso significa:
+
+👉 b deve conter exatamente o mesmo conteúdo mostrado.
+
+⚠️ Detalhe CRÍTICO
+
+Eles mostram o conteúdo com cat -e.
+
+Isso significa:
+
+Cada linha termina com $
+
+Linhas vazias aparecem como apenas $
+
+Existe quebra de linha no final
+
+Se faltar uma única quebra de linha → reprova.
+
+✅ Forma correta de criar o arquivo b
+
+Entre na pasta:
+
+mkdir ex07
+cd ex07
+
+
+Crie o arquivo:
+
+nano b
+
+
+Cole exatamente:
+
+STARWARS
+Episode IV, A NEW HOPE It is a period of civil war.
+
+Rebel spaceships, striking from a hidden base, have won their first victory against the evil
+Galactic Empire.
+During the battle, Rebel spies

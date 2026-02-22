@@ -1,0 +1,93 @@
+Exercício 04 — midLS
+O que o enunciado exige
+
+Você deve criar um arquivo chamado: midLS
+E dentro dele escrever um único comando que:
+Liste arquivos e diretórios do diretório atual
+Exclua arquivos ocultos (. e .. e qualquer .arquivo)
+Ordene por data de modificação
+Separe por vírgula + espaço
+Diretórios terminem com /
+Nada além disso
+
+⚠️ Não é script
+⚠️ Não é programa
+⚠️ É apenas uma linha com um comando
+
+Análise Técnica
+Vamos quebrar os requisitos.
+1️⃣ Excluir arquivos ocultos
+Por padrão, ls já exclui arquivos que começam com ..
+
+Então: ls
+já resolve isso.
+
+Ordenar por data de modificação
+Manual (man ls): -t  sort by modification time, newest first
+
+Então: ls -t
+
+Separar por vírgula e espaço
+
+Manual diz: -m  fill width with a comma separated list of entries
+Então: ls -m
+
+Isso já coloca:
+arquivo1, arquivo2, arquivo3
+
+Diretórios terminem com /
+Manual: -p  append / indicator to directories
+Então: ls -p
+
+Comando final correto
+Combine tudo: ls -tmp
+Ordem das flags não importa.
+
+O que colocar dentro do arquivo midLS
+Crie a pasta:
+mkdir ex04
+cd ex04
+Crie o arquivo: echo "ls -tmp" > midLS
+O arquivo deve conter exatamente: ls -tmp
+Nada mais.
+
+Dê permissão de execução: chmod +x midLS
+
+Verificação
+Veja o conteúdo: cat midLS
+Deve mostrar: ls -tmp
+
+Teste o comando: ./midLS
+Deve listar os arquivos e diretórios do diretório atual, excluindo ocultos, orden
+
+Estrutura final
+ex04/
+└── midLS
+Conclusão
+O arquivo midLS contém um comando que atende a todos os requisitos do exercício. Ele lista os
+
+O que você aprendeu aqui
+
+Como ler o manual (man ls)
+
+Flags importantes do ls
+
+Combinação de opções
+
+Interpretação precisa de requisitos
+
+Que a 42 valoriza leitura de documentação
+
+🧠 Dica de mentalidade Piscina
+
+Quando o enunciado diz:
+
+RTFM
+
+Eles estão testando se você:
+
+Lê o manual
+
+Interpreta corretamente
+
+Não tenta reinventar a roda

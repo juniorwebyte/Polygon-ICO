@@ -1,93 +1,46 @@
-import styled, { css, keyframes } from "styled-components";
-
-const fillIn = keyframes`
-  from { width: 0%; }
-  to   { width: var(--target-width, 50%); }
-`;
-
-const shine = keyframes`
-  0%   { left: -100%; }
-  60%  { left: 150%; }
-  100% { left: 150%; }
-`;
-
-const glowMove = keyframes`
-  0%, 100% { opacity: 0.6; }
-  50%       { opacity: 1; }
-`;
+import styled, { css } from "styled-components";
 
 const ProgressWrapper = styled.div`
   width: 100%;
-  height: 10px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 50px;
-  overflow: hidden;
-  position: relative;
+  height: 20px;
+  background: ${({ theme }) => theme.colors.white}1a;
+  border-radius: 10px;
 
   .progress-done {
     height: 100%;
-    background: linear-gradient(90deg, #00F5C4 0%, #4A9EFF 100%);
-    border-radius: 50px;
-    position: relative;
-    overflow: hidden;
-    animation: ${fillIn} 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
-    box-shadow: 0 0 12px #00F5C450;
-
-    /* Shine effect */
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-      animation: ${shine} 3s ease-in-out 1.5s infinite;
-    }
+    background: ${({ theme }) => theme.colors.primary};
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
     p {
-      display: none;
+      padding-right: 5px;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      color: ${({ theme }) => theme.colors.black};
     }
   }
-
-  /* Dashed variant */
-  ${({ variant }) =>
-    variant === "dashed" &&
-    css`
-      height: 12px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 50px;
-
-      .progress-done {
-        background: linear-gradient(90deg, #00F5C4 0%, #4A9EFF 60%, #7B5EA7 100%);
-        box-shadow: 0 0 20px #00F5C450, 0 0 40px #4A9EFF20;
-        border-radius: 50px;
-
-        &::after {
-          animation: ${shine} 2.5s ease-in-out 1.5s infinite;
-        }
-      }
-    `}
 
   ${({ variant }) =>
     variant === "v2" &&
     css`
-      height: 16px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 4px;
+      height: 24px;
+      background: ${({ theme }) => theme.colors.white}1a;
+      backdrop-filter: blur(10px);
+      border-radius: 0;
 
       .progress-done {
-        background: linear-gradient(90deg, #00F5C4 0%, #4A9EFF 100%);
-        border-radius: 4px;
+        background: #1dff96;
+        border-radius: 0;
 
         p {
-          display: flex;
-          align-items: center;
-          padding-right: 8px;
-          font-family: ${({ theme }) => theme.fonts.secondary};
+          padding-right: 5px;
+          font-family: ${({ theme }) => theme.fonts.primary};
           font-weight: 600;
-          font-size: 11px;
-          color: #080B14;
+          font-size: 14px;
+          line-height: 1;
         }
       }
     `}
@@ -95,9 +48,99 @@ const ProgressWrapper = styled.div`
   ${({ variant }) =>
     variant === "green" &&
     css`
-      height: 10px;
+      background: ${({ theme }) => theme.colors.white}1a;
+
       .progress-done {
-        background: linear-gradient(90deg, #00F5C4 0%, #4A9EFF 100%);
+        background: ${({ theme }) => theme.colors.secondary};
+
+        p {
+          color: ${({ theme }) => theme.colors.white};
+        }
+      }
+    `}
+
+  ${({ variant }) =>
+    variant === "green2" &&
+    css`
+      height: 24px;
+      border-radius: 12px;
+      background: ${({ theme }) => theme.colors.white}1a;
+      backdrop-filter: blur(10px);
+
+      .progress-done {
+        background: #1dff96;
+        border-radius: 12px;
+
+        p {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 30px;
+          color: ${({ theme }) => theme.colors.black};
+        }
+      }
+    `}
+
+  ${({ variant }) =>
+    variant === "dashed" &&
+    css`
+      width: 100%;
+      height: 40px;
+      background: ${({ theme }) => theme.colors.white}0d;
+      border: 1px dashed ${({ theme }) => theme.colors.white}33;
+      border-radius: 20px;
+      padding: 8px;
+
+      .progress-done {
+        height: 24px;
+        background: ${({ theme }) => theme.colors.themeBlue};
+        border-radius: 12px;
+
+        p {
+          color: ${({ theme }) => theme.colors.white};
+        }
+      }
+    `}
+
+  ${({ variant }) =>
+    variant === "dashed2" &&
+    css`
+      width: 100%;
+      height: 40px;
+      background: ${({ theme }) => theme.colors.white}0d;
+      border: 1px dashed ${({ theme }) => theme.colors.white}33;
+      border-radius: 20px;
+      padding: 8px;
+
+      .progress-done {
+        height: 24px;
+        background: ${({ theme }) => theme.colors.linearGradient2};
+        border-radius: 12px;
+
+        p {
+          color: ${({ theme }) => theme.colors.white};
+        }
+      }
+    `}
+
+    ${({ variant }) =>
+    variant === "dashed3" &&
+    css`
+      width: 100%;
+      height: 40px;
+      background: ${({ theme }) => theme.colors.white}0d;
+      border: 1px dashed ${({ theme }) => theme.colors.white}4d;
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      padding: 8px;
+
+      .progress-done {
+        height: 24px;
+        background: #07e6f5;
+        border-radius: 12px;
+
+        p {
+          color: ${({ theme }) => theme.colors.black};
+        }
       }
     `}
 `;

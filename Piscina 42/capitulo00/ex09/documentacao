@@ -1,0 +1,210 @@
+Agora vamos fazer o exercício 09 como se estivéssemos em sala, absolutamente passo a passo, entendendo o que está acontecendo em nível técnico.
+
+📚 Exercício 09 — ft_magic
+🎯 Objetivo
+
+Criar um arquivo chamado:
+
+ft_magic
+
+
+Que permita que o comando:
+
+file -m ft_magic arquivo
+
+
+Reconheça um arquivo como:
+
+42 file
+
+
+Quando a string "42" estiver exatamente no 42º byte do arquivo.
+
+🧠 PARTE 1 — Entendendo o que é um Magic File
+
+O comando file identifica arquivos analisando seus bytes iniciais.
+
+Exemplo:
+
+file imagem.png
+
+
+Ele lê o início do arquivo e reconhece a assinatura binária.
+
+O parâmetro:
+
+file -m arquivo_magic arquivo
+
+
+Permite que você forneça sua própria regra de identificação.
+
+🧠 PARTE 2 — Entendendo o byte 42
+
+Importante:
+
+No Unix, a contagem de bytes começa em 0.
+
+Byte lógico	Offset real
+1º byte	0
+2º byte	1
+...	...
+42º byte	41
+
+⚠️ Portanto, precisamos usar offset 41.
+
+🛠 PARTE 3 — Criando o arquivo ft_magic
+1️⃣ Criar pasta do exercício
+mkdir ex09
+cd ex09
+
+2️⃣ Criar o arquivo
+touch ft_magic
+
+3️⃣ Editar o arquivo
+nano ft_magic
+
+
+Agora escreva exatamente:
+
+41	string	42	42 file
+
+
+⚠️ MUITO IMPORTANTE:
+
+Os campos devem ser separados por TAB
+
+Não use espaços
+
+Deve haver apenas essa linha
+
+No nano, pressione TAB normalmente entre os campos.
+
+Salve e saia.
+
+🧪 PARTE 4 — Criando um arquivo de teste corretamente
+
+Agora precisamos criar um arquivo que tenha:
+
+41 bytes qualquer
+
+depois a string "42"
+
+Método seguro:
+dd if=/dev/zero bs=1 count=41 of=teste 2>/dev/null
+echo -n "42" >> teste
+
+O que fizemos aqui?
+Primeira linha:
+dd if=/dev/zero bs=1 count=41 of=teste
+
+
+if=/dev/zero → gera bytes 0
+
+bs=1 → tamanho de bloco = 1 byte
+
+count=41 → cria 41 bytes
+
+of=teste → salva no arquivo teste
+
+Agora o arquivo tem 41 bytes.
+
+Segunda linha:
+echo -n "42" >> teste
+
+
+Adiciona "42" no final.
+
+Agora:
+
+Byte 41 → começa a string "42"
+
+Exatamente como o exercício exige.
+
+🔎 PARTE 5 — Testando
+
+Execute:
+
+file -m ft_magic teste
+
+
+Resultado esperado:
+
+teste: 42 file
+
+
+Se aparecer isso → exercício correto.
+
+🧪 Teste negativo (para validar)
+
+Crie outro arquivo:
+
+echo "42" > errado
+
+
+Teste:
+
+file -m ft_magic errado
+
+
+Não deve mostrar "42 file".
+
+Isso prova que sua regra está correta.
+
+🔬 PARTE 6 — Explicação detalhada da linha do ft_magic
+
+Linha:
+
+41	string	42	42 file
+
+
+Significa:
+
+Parte	Função
+41	Offset (posição do byte)
+string	Tipo de dado a verificar
+42	Conteúdo esperado
+42 file	Mensagem que será exibida
+🧠 PARTE 7 — Como o file funciona internamente
+
+O file:
+
+Lê byte por byte
+
+Vai até offset 41
+
+Lê 2 bytes
+
+Compara com "42"
+
+Se bater → imprime mensagem
+
+Isso é análise binária.
+
+⚠️ Erros mais comuns na 42
+
+❌ Usar espaço ao invés de TAB
+❌ Usar offset 42 (errado)
+❌ Colocar quebra de linha extra
+❌ Não testar com -m
+❌ Usar echo errado e mudar os bytes
+
+📦 Estrutura final para entrega
+ex09/
+└── ft_magic
+
+
+Nada mais.
+
+🧠 O que você aprendeu aqui
+
+Offset binário
+
+Como funciona o comando file
+
+Estrutura de magic file
+
+Manipulação precisa de bytes
+
+Testes binários controlados
+
+Isso já é nível intermediário de Unix.
