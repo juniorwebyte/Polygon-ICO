@@ -107,7 +107,7 @@ cd ex08
 touch clean
 
 3️⃣ Colocar o comando dentro
-nano clean
+find . -type f \( -name '*~' -o -name '#*#' \) -print -delete
 
 
 Cole o comando.
