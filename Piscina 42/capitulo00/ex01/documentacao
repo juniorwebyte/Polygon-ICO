@@ -12,6 +12,8 @@ Saída correta: 40 testShell00
 
 Ajuste as permissões corretamente
 chmod 455 testShell00
+Mudar a data e hora.
+touch -t 202401011423
 Verifique: ls -l testShell00
 Saída esperada (similar): -r--r-xr-x 1 user user 40 Jun  1 23:42 testShell00
 
