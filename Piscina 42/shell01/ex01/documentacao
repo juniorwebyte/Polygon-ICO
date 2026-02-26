@@ -19,12 +19,12 @@ daemon bin
 Mas precisamos:
 
 daemon,bin
-🛠 Transformando espaços em vírgulas
+Transformando espaços em vírgulas
 
 Usamos:
 
 tr ' ' ','
-✅ Linha final exigida
+Linha final exigida
 
 Coloque exatamente isso dentro do arquivo print_groups.sh:
 
@@ -32,13 +32,13 @@ id -Gn $FT_USER | tr ' ' ','
 
 Nada mais.
 
-📂 Passo a passo completo
-1️⃣ Criar pasta
+Passo a passo completo
+Criar pasta
 mkdir -p ex01
 cd ex01
-2️⃣ Criar arquivo
+Criar arquivo
 touch print_groups.sh
-3️⃣ Editar
+Editar
 nano print_groups.sh
 
 Colar:
@@ -47,16 +47,16 @@ id -Gn $FT_USER | tr ' ' ','
 
 Salvar.
 
-4️⃣ Permissão
+Permissão
 chmod +x print_groups.sh
-🧪 Teste correto
+Teste correto
 export FT_USER=daemon
 ./print_groups.sh
 
 Deve sair:
 
 daemon,bin
-⚠️ Sobre o problema que você teve antes
+Sobre o problema que você teve antes
 
 Se aparecer número como:
 
@@ -67,7 +67,7 @@ Não é erro do exercício.
 
 Na correção da 42, o comando acima funciona normalmente.
 
-📌 O que a 42 avalia aqui
+O que a 42 avalia aqui
 
 Uso correto de variável de ambiente
 
