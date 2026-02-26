@@ -1,0 +1,165 @@
+Lógica
+
+Queremos as linhas:
+
+1
+3
+5
+7
+...
+
+Ou seja, linhas ímpares.
+
+✅ Solução correta (mais comum na 42)
+
+Crie a pasta:
+
+mkdir -p ex06
+cd ex06
+
+Agora crie o arquivo:
+
+echo "ls -l | awk 'NR % 2 == 1'" > skip.sh
+
+Dê permissão:
+
+chmod +x skip.sh
+🧠 Como funciona
+NR
+
+Número da linha atual no awk
+
+NR % 2 == 1
+
+% é operador módulo
+
+Linhas ímpares têm resto 1
+
+Então imprime apenas 1, 3, 5, 7...
+
+🧪 Teste
+./skip.sh | cat -e
+
+Deve mostrar:
+
+total 4$
+arquivo1$
+arquivo3$
+arquivo5$
+🔥 Alternativa usando sed (também válida)
+
+Se quiser outra solução:
+
+echo "ls -l | sed -n 'p;n'" > skip.sh
+
+Funciona assim:
+
+p imprime a linha
+
+n pula para próxima sem imprimir
+
+⚠ Importante
+
+O arquivo skip.sh deve conter apenas:
+
+ls -l | awk 'NR % 2 == 1'
+
+Nada mais.
+
+Sem shebang.
+Sem comentários.
+Sem linhas extras.
+
+Quantidade de arquivos
+
+O exemplo mostra:
+
+skip.sh
+tata
+titi
+toto
+tutu
+
+Se você não tiver exatamente esses 5 arquivos, o output será diferente.
+
+Teste assim para simular igual:
+
+touch tata titi toto tutu
+
+Depois:
+
+ls -l | cat -e
+
+Agora ficará parecido.
+
+2️⃣ Ordem dos arquivos
+
+ls -l ordena alfabeticamente.
+
+No exemplo:
+
+skip.sh
+tata
+titi
+toto
+tutu
+
+Se seus nomes forem diferentes, a linha que será “pulada” também será diferente.
+
+Lembre:
+
+Seu script imprime:
+
+linha 1
+linha 3
+linha 5
+linha 7
+
+Se a ordem mudar, o resultado muda.
+
+3️⃣ O número depois de total
+
+Essa linha:
+
+total 4
+
+Não significa “4 arquivos”.
+
+Significa o total de blocos de disco usados no diretório.
+Isso varia conforme:
+
+sistema de arquivos
+
+tamanho dos arquivos
+
+sistema operacional
+
+Então nunca será idêntico ao exemplo.
+
+🔎 Quer ver exatamente como o exemplo funciona?
+
+Execute:
+
+rm -f tata titi toto tutu
+touch tata titi toto tutu
+
+Depois:
+
+ls -l | cat -e
+
+E então:
+
+./skip.sh | cat -e
+
+Agora o comportamento será igual ao modelo do enunciado (respeitando seu sistema).
+
+📌 Conclusão
+
+Nada está errado.
+
+O exercício não pede para “reproduzir aquele texto”.
+Ele pede para:
+
+Mostrar cada segunda linha começando da primeira.
+
+Se isso está acontecendo, você está correto.

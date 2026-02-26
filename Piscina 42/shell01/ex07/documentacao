@@ -1,0 +1,106 @@
+O que o script deve fazer (na ordem obrigatória)
+
+cat /etc/passwd
+
+Remover comentários
+
+Manter uma linha sim, uma não (começando da segunda)
+
+Extrair apenas o login
+
+Inverter cada login
+
+Ordenar em ordem alfabética inversa
+
+Manter apenas entre FT_LINE1 e FT_LINE2
+
+Juntar tudo em uma única linha
+
+Separar por ,
+
+Terminar com .
+
+✅ Linha de comando correta
+
+Crie a pasta:
+
+mkdir -p ex07
+cd ex07
+
+Agora crie o arquivo:
+
+echo 'cat /etc/passwd \
+| grep -v "^#" \
+| awk "NR % 2 == 0" \
+| cut -d: -f1 \
+| rev \
+| sort -r \
+| sed -n "${FT_LINE1},${FT_LINE2}p" \
+| paste -sd ", " - \
+| sed "s/$/./"' > r_dwssap.sh
+
+Dê permissão:
+
+chmod +x r_dwssap.sh
+🧠 Explicação técnica etapa por etapa
+1️⃣ Remover comentários
+grep -v "^#"
+
+Remove linhas que começam com #.
+
+2️⃣ Manter uma linha sim, uma não (começando da segunda)
+awk "NR % 2 == 0"
+
+NR = número da linha
+
+% 2 == 0 → linhas pares
+
+Começa da segunda
+
+3️⃣ Extrair login
+cut -d: -f1
+
+Login é o primeiro campo separado por :.
+
+4️⃣ Inverter login
+rev
+5️⃣ Ordenar em ordem alfabética inversa
+sort -r
+6️⃣ Manter apenas entre FT_LINE1 e FT_LINE2
+sed -n "${FT_LINE1},${FT_LINE2}p"
+7️⃣ Juntar numa única linha
+paste -sd ", " -
+8️⃣ Finalizar com ponto
+sed "s/$/./"
+🧪 Teste
+
+Exemplo:
+
+export FT_LINE1=7
+export FT_LINE2=15
+./r_dwssap.sh
+⚠ Pontos críticos que fazem perder ponto
+
+Ordem errada dos pipes
+
+Fazer cut antes de filtrar linhas
+
+Esquecer o rev
+
+Não usar sort -r
+
+Não terminar com ponto
+
+Não usar exatamente ", " (vírgula + espaço)
+
+📌 Observação importante
+
+O arquivo r_dwssap.sh deve conter apenas essa linha, nada mais:
+
+Sem:
+
+#!/bin/bash
+
+comentários
+
+linhas extras

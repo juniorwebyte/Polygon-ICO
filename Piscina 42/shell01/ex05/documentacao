@@ -1,0 +1,118 @@
+Objetivo
+
+Criar dentro de ex05/ um arquivo cujo nome seja exatamente:
+
+"\?$*'MaRViN'*$?\"
+
+E que contenha apenas:
+
+42
+
+Sem quebra extra, sem espaço, nada mais.
+
+🧠 O problema real
+
+O nome contém caracteres especiais:
+
+"
+
+\
+
+?
+
+*
+
+'
+
+$
+
+Todos eles têm significado especial no shell.
+
+Então precisamos impedir que o shell os interprete.
+
+🛠 Estratégia correta
+
+A forma mais segura é:
+
+Usar aspas simples '...'
+
+Escapar apenas o que for necessário
+
+Mas aqui temos um problema:
+
+O nome contém ' (aspas simples).
+
+Dentro de aspas simples, você não pode usar ' diretamente.
+
+Então precisamos fechar e reabrir as aspas.
+
+✅ Comando correto para criar o arquivo
+
+Entre na pasta:
+
+mkdir -p ex05
+cd ex05
+
+Agora execute exatamente:
+
+echo -n 42 > "\"\?\$*'MaRViN'*\$?\\\""
+🔎 Explicação técnica
+
+Vamos decompor:
+
+\"
+
+Coloca uma aspas dupla literal
+
+\?
+
+Evita expansão de glob
+
+\$
+
+Evita expansão de variável
+
+\\\"
+
+Cria:
+
+uma barra invertida
+
+seguida de aspas dupla
+
+Tudo isso dentro de aspas duplas externas.
+
+🧪 Verificar se funcionou
+
+Execute:
+
+ls -lRa *MaRViN* | cat -e
+
+Deve aparecer algo como:
+
+-rw-r--r-- ... "\?$*'MaRViN'*$?\"$
+🔬 Verificar conteúdo
+cat "\"\?\$*'MaRViN'*\$?\\\""
+
+Deve imprimir:
+
+42
+
+Sem quebra extra.
+
+⚠️ Erros comuns
+
+❌ Usar echo 42 (sem -n) → adiciona quebra de linha
+❌ Não escapar $
+❌ Não escapar *
+❌ Não escapar \ final
+
+🧠 O que a 42 quer testar aqui
+
+Entendimento de escaping
+
+Diferença entre aspas simples e duplas
+
+Como o shell interpreta caracteres especiais
+
+Redirecionamento correto

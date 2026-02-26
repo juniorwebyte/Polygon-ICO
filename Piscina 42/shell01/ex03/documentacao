@@ -1,0 +1,279 @@
+Criar um script:
+
+ex03/count_files.sh
+
+Que:
+
+Conte arquivos regulares
+
+Conte diretórios
+
+No diretório atual e subdiretórios
+
+Inclua "." (diretório inicial)
+
+Mostre apenas o número total
+
+🧠 Estratégia correta
+
+O comando ideal aqui é find.
+
+Se executarmos:
+
+find .
+
+Ele lista:
+
+.
+
+todos os diretórios
+
+todos os arquivos
+
+Exatamente o que precisamos contar.
+
+🧠 Por que isso funciona?
+
+Por padrão, find . lista:
+
+Diretórios
+
+Arquivos regulares
+
+Links
+
+etc.
+
+Mas o exercício pede:
+
+arquivos regulares e diretórios
+
+Então precisamos filtrar apenas:
+
+-type f
+
+-type d
+
+🛠 Construção passo a passo
+1️⃣ Selecionar arquivos e diretórios
+find . \( -type f -o -type d \)
+
+Explicação:
+
+-type f → arquivos
+
+-type d → diretórios
+
+-o → OR
+
+\( \) → agrupamento obrigatório
+
+2️⃣ Contar linhas
+
+Cada resultado é uma linha.
+
+Então usamos:
+
+| wc -l
+✅ Linha final correta
+
+Coloque no count_files.sh:
+
+find . \( -type f -o -type d \) | wc -l
+📂 Passo a passo completo
+1️⃣ Criar pasta
+mkdir -p ex03
+cd ex03
+2️⃣ Criar arquivo
+touch count_files.sh
+3️⃣ Editar
+nano count_files.sh
+
+Coloque:
+
+find . \( -type f -o -type d \) | wc -l
+
+Salvar.
+
+4️⃣ Permissão
+chmod +x count_files.sh
+🧪 Teste
+
+Crie estrutura de teste:
+
+mkdir pasta
+touch file1
+touch file2
+touch pasta/file3
+
+Agora execute:
+
+./count_files.sh | cat -e
+
+Saída exemplo:
+
+5$
+
+Por quê 5?
+
+.
+
+./pasta
+
+file1
+
+file2
+
+pasta/file3
+
+Total = 5
+
+⚠️ Erros comuns na 42
+
+❌ Usar apenas find . | wc -l (conta links e outros tipos)
+❌ Não incluir diretórios
+❌ Esquecer os parênteses escapados
+❌ Usar dois comandos separados
+
+🧠 O que você aprendeu
+
+Uso lógico com find
+
+Filtro por tipo
+
+Agrupamento com \( \)
+
+Contagem com wc -l
+
+Por que pode dar 7?
+
+Porque o find conta:
+
+.
+
+./ex03
+
+./count_files.sh
+
+outros arquivos que você criou
+
+diretórios escondidos (como .git)
+
+subdiretórios
+
+arquivos dentro deles
+
+Se você estiver dentro de um projeto Git, por exemplo, ele vai contar:
+
+./.git
+./.git/config
+./.git/objects
+...
+
+E isso aumenta bastante o número.
+
+🎯 Teste controlado (para ter certeza)
+
+Crie uma pasta limpa:
+
+mkdir teste
+cd teste
+
+Agora crie exatamente isso:
+
+mkdir pasta
+touch file1
+touch file2
+touch pasta/file3
+
+Execute:
+
+find . \( -type f -o -type d \) | wc -l
+
+Agora deve dar:
+
+5
+
+Porque temos:
+
+.
+
+./pasta
+
+./file1
+
+./file2
+
+./pasta/file3
+
+⚠️ Conclusão importante
+
+Se deu 7 no seu diretório atual:
+
+✔️ Seu comando está correto
+✔️ Existem 7 arquivos/diretórios reais ali
+❌ Não é erro do script
+
+🧠 Dica de avaliador da 42
+
+O exercício não exige número específico.
+Ele exige que a contagem esteja correta para o conteúdo existente.
+
+Se o número bate com o que find lista, está certo.
+
+Se você quer ver 42$ aparecendo
+
+Então você precisa ter exatamente 42 entradas (arquivos + diretórios, incluindo ".") no diretório onde está executando.
+
+🧪 Como gerar exatamente 42 para teste
+
+Entre em uma pasta vazia:
+
+mkdir teste42
+cd teste42
+
+Agora crie 41 arquivos:
+
+for i in $(seq 1 39); do touch file$i; done
+
+Agora conte:
+
+find . \( -type f -o -type d \) | wc -l
+
+Vai retornar:
+
+42
+
+Por quê?
+
+41 arquivos
+
+1 diretório .
+= 42
+
+📌 Importante (mentalidade 42)
+
+Se você modificar o script para sempre imprimir:
+
+echo 42
+
+Ele será considerado errado na correção.
+
+Porque o avaliador muda o conteúdo do diretório.
+
+✅ O que a 42 quer testar aqui
+
+Uso correto do find
+
+Uso correto de operadores lógicos
+
+Entendimento de contagem
+
+Não hardcode
+
+🔥 Conclusão
+
+Para sair 42$, você precisa ter 42 entradas reais.
+O script deve continuar sendo:
+
+find . \( -type f -o -type d \) | wc -l

@@ -1,0 +1,101 @@
+Objetivo
+
+Criar um script:
+
+ex02/find_sh.sh
+
+Que:
+
+Procure arquivos terminados em .sh
+
+No diretório atual e subdiretórios
+
+Mostre apenas o nome do arquivo
+
+Sem o caminho
+
+Sem a extensão .sh
+
+Uma única linha de comando
+
+🧠 Passo 1 — Encontrar arquivos .sh
+
+Usamos find:
+
+find . -type f -name "*.sh"
+
+Isso retorna algo como:
+
+./find_sh.sh
+./pasta/file1.sh
+./pasta/sub/file2.sh
+
+Mas o exercício quer apenas:
+
+find_sh
+file1
+file2
+🧠 Passo 2 — Mostrar apenas o nome do arquivo (sem caminho)
+
+Use:
+
+-printf "%f\n"
+
+%f → filename sem caminho
+
+Então:
+
+find . -type f -name "*.sh" -printf "%f\n"
+
+Saída:
+
+find_sh.sh
+file1.sh
+file2.sh
+🧠 Passo 3 — Remover a extensão .sh
+
+Temos duas opções:
+
+✔️ Opção limpa usando sed:
+sed 's/\.sh$//'
+✅ Linha final correta
+
+Coloque exatamente isso no find_sh.sh:
+
+find . -type f -name "*.sh" -printf "%f\n" | sed 's/\.sh$//'
+📂 Passo a passo completo
+1️⃣ Criar pasta
+mkdir -p ex02
+cd ex02
+2️⃣ Criar arquivo
+touch find_sh.sh
+3️⃣ Editar
+nano find_sh.sh
+
+Coloque:
+
+find . -type f -name "*.sh" -printf "%f\n" | sed 's/\.sh$//'
+
+Salvar.
+
+4️⃣ Permissão
+chmod +x find_sh.sh
+🧪 Teste
+
+Crie arquivos de teste:
+
+touch file1.sh
+touch file2.sh
+mkdir pasta
+touch pasta/file3.sh
+
+Execute:
+
+./find_sh.sh | cat -e
+
+Saída esperada:
+
+find_sh$
+file1$
+file2$
+file3$

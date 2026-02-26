@@ -1,0 +1,139 @@
+O problema
+
+Você recebe:
+
+FT_NBR1 → número na base '"?!
+
+FT_NBR2 → número na base mrdoc
+
+E deve imprimir a soma na base:
+
+gtaio luSnemf
+🔎 1️⃣ Determinar as bases
+Base de FT_NBR1
+
+Os dígitos são:
+
+' \ " ? !
+
+Total: 5 símbolos
+
+👉 Base 5
+
+Ordem dos dígitos (importante):
+
+'  = 0
+\  = 1
+"  = 2
+?  = 3
+!  = 4
+Base de FT_NBR2
+
+Símbolos:
+
+m r d o c
+
+Total: 5 símbolos
+
+👉 Base 5
+
+Ordem:
+
+m = 0
+r = 1
+d = 2
+o = 3
+c = 4
+Base de saída
+g t a i o ' ' l u S n e m f
+
+Total: 13 símbolos
+
+👉 Base 13
+
+Ordem:
+
+g=0
+t=1
+a=2
+i=3
+o=4
+(space)=5
+l=6
+u=7
+S=8
+n=9
+e=10
+m=11
+f=12
+
+Sim, espaço conta como dígito.
+
+🧠 Estratégia
+
+Converter FT_NBR1 para decimal
+
+Converter FT_NBR2 para decimal
+
+Somar
+
+Converter resultado para base 13 personalizada
+
+✅ Linha de comando correta
+
+Crie a pasta:
+
+mkdir -p ex08
+cd ex08
+
+Agora crie o arquivo:
+
+echo 'echo "obase=13; ibase=5; $(echo $FT_NBR1 | tr "'\''\\\"?!" "01234") + $(echo $FT_NBR2 | tr "mrdoc" "01234")" | bc | tr "0123456789ABC" "gtaio luSnemf"' > add_chelou.sh
+
+Dê permissão:
+
+chmod +x add_chelou.sh
+🧪 Teste oficial
+export FT_NBR1=\'?"\"'\'
+export FT_NBR2=rcrdmddd
+./add_chelou.sh
+
+Resultado esperado:
+
+Salut
+🔬 Explicação técnica
+tr "'\\\"?!" "01234"
+
+Converte base maluca para base 5 padrão.
+
+bc
+
+Faz cálculo com:
+
+ibase=5
+obase=13
+tr "0123456789ABC" "gtaio luSnemf"
+
+Converte base 13 padrão para base customizada.
+
+⚠ Pontos que fazem perder ponto
+
+Errar ordem dos símbolos
+
+Esquecer que espaço é dígito
+
+Errar escaping de ' e \
+
+Não usar bc
+
+Esquecer obase antes do cálculo
+
+📌 O arquivo deve conter apenas uma linha
+
+Sem:
+
+shebang
+
+comentários
+
+linha extra

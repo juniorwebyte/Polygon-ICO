@@ -1,0 +1,82 @@
+O que o man id indica
+
+O comando correto para obter apenas os nomes dos grupos é:
+
+id -Gn usuario
+
+-G → grupos
+
+-n → nomes (não números)
+
+Exemplo:
+
+id -Gn daemon
+
+Saída:
+
+daemon bin
+
+Mas precisamos:
+
+daemon,bin
+🛠 Transformando espaços em vírgulas
+
+Usamos:
+
+tr ' ' ','
+✅ Linha final exigida
+
+Coloque exatamente isso dentro do arquivo print_groups.sh:
+
+id -Gn $FT_USER | tr ' ' ','
+
+Nada mais.
+
+📂 Passo a passo completo
+1️⃣ Criar pasta
+mkdir -p ex01
+cd ex01
+2️⃣ Criar arquivo
+touch print_groups.sh
+3️⃣ Editar
+nano print_groups.sh
+
+Colar:
+
+id -Gn $FT_USER | tr ' ' ','
+
+Salvar.
+
+4️⃣ Permissão
+chmod +x print_groups.sh
+🧪 Teste correto
+export FT_USER=daemon
+./print_groups.sh
+
+Deve sair:
+
+daemon,bin
+⚠️ Sobre o problema que você teve antes
+
+Se aparecer número como:
+
+197121
+
+Isso é problema do seu sistema local (GID sem nome).
+Não é erro do exercício.
+
+Na correção da 42, o comando acima funciona normalmente.
+
+📌 O que a 42 avalia aqui
+
+Uso correto de variável de ambiente
+
+Uso correto de id
+
+Uso correto de pipe
+
+Manipulação de saída
+
+Nenhum texto extra
+
+Nenhum espaço após vírgula

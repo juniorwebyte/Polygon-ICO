@@ -1,0 +1,87 @@
+Objetivo
+
+Criar ex04/MAC.sh contendo uma única linha de comando que:
+
+Mostre todos os endereços MAC da máquina
+
+Um por linha
+
+Apenas o MAC
+
+Nada mais
+
+🧠 Usando ifconfig (como o enunciado sugere)
+
+Quando você executa:
+
+ifconfig
+
+A linha que contém o MAC normalmente aparece como:
+
+ether 08:00:27:1a:2b:3c
+
+Então precisamos:
+
+Filtrar linhas que contenham ether
+
+Extrair apenas o segundo campo (o MAC)
+
+✅ Linha correta
+
+Coloque exatamente isso dentro de MAC.sh:
+
+ifconfig | grep ether | awk '{print $2}'
+📂 Passo a passo completo
+1️⃣ Criar pasta
+mkdir -p ex04
+cd ex04
+2️⃣ Criar arquivo
+touch MAC.sh
+3️⃣ Editar
+nano MAC.sh
+
+Coloque:
+
+ifconfig | grep ether | awk '{print $2}'
+
+Salvar.
+
+4️⃣ Permissão
+chmod +x MAC.sh
+🧪 Teste
+
+Execute:
+
+./MAC.sh | cat -e
+
+Saída exemplo:
+
+08:00:27:1a:2b:3c$
+52:54:00:12:34:56$
+
+Cada MAC em uma linha.
+
+⚠️ Se ifconfig não existir no seu sistema
+
+Alguns sistemas usam ip em vez de ifconfig.
+Se aparecer:
+
+ifconfig: command not found
+
+Use:
+
+ip link | grep link/ether | awk '{print $2}'
+
+Mas para a 42, normalmente ifconfig está disponível.
+
+📌 O que a 42 avalia aqui
+
+Uso correto de pipe
+
+Filtragem adequada
+
+Extração precisa do MAC
+
+Nenhuma informação extra na saída
+
+Uma única linha de comando
